@@ -11,12 +11,12 @@ module.exports = class Cart {
 
     //region public methods
     constructor(items) {
-        this.#items = items;
+        this.add(items);
     }
 
     get items() {
         if (this.#items === null) {
-            throw new EmptyCartException("Cart must have at least one item");
+            throw new EmptyCartException();
         }
 
         return this.#items;
@@ -24,7 +24,7 @@ module.exports = class Cart {
 
     get total() {
         if (this.#items === null) {
-            throw new EmptyCartException("Cart must have at least one item");
+            throw new EmptyCartException();
         }
 
         let tot = 0;
@@ -37,11 +37,11 @@ module.exports = class Cart {
     //endregion public methods
 
     //region private methods
-    count(bool = false) {
+    count(distinct = false) {
         if (this.#items === null) {
-            throw new EmptyCartException("Cart must have at least one item");
+            throw new EmptyCartException();
         }
-        if (bool) {
+        if (distinct) {
             return this.#items.length;
         }
         let count = 0;
@@ -52,8 +52,8 @@ module.exports = class Cart {
     }
 
     add(items) {
-        if (items === null) {
-            throw new UpdateCartException("Cart must have at least one item");
+        if ((items === null)&&(this.#items === null)) {
+            throw new UpdateCartException();
         }
         this.#items = items;
     }
