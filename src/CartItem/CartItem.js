@@ -11,18 +11,24 @@ module.exports = class CartItem {
     #name;
     #quantity;
     #price;
+    #currency;
     //endregion private attributes
 
     //region public methods
-    constructor(articleId, name, quantity, price) {
+    constructor(articleId, name, quantity, price,currency = "CHF") {
         if (articleId < 1) {
             throw new InvalidArticleIdException();
         }
+        //if the cart curency is not the same as the currency of the item, throw an exception
+        /*if(cart.currency !== currency){
+            throw new InvalidCurrencyException();
+        }*/
 
         this.#articleId = articleId;
         this.#name = name;
         this.quantity=quantity;
         this.price=price;
+        this.#currency = currency;
     }
 
     get articleId() {
@@ -35,6 +41,9 @@ module.exports = class CartItem {
 
     get quantity() {
         return this.#quantity;
+    }
+    get currency() {
+        return this.#currency;
     }
 
     set quantity(value) {

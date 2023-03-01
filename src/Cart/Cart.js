@@ -7,26 +7,20 @@ module.exports = class Cart {
 
     //region private attributes
     #items = [];
+    #currency;
     //endregion private attributes
 
     //region public methods
-    constructor(items) {
+    constructor(items, currency= "CHF") {
         this.add(items);
+        this.#currency = currency;
     }
 
     get items() {
-        if (this.#items === null) {
-            throw new EmptyCartException();
-        }
-
         return this.#items;
     }
 
     get total() {
-        if (this.#items === null) {
-            throw new EmptyCartException();
-        }
-
         let tot = 0;
         for (let item of this.#items) {
             tot += item.quantity * item.price;
@@ -34,13 +28,14 @@ module.exports = class Cart {
         return tot;
     }
 
+    get currency() {
+       return this.#currency;
+    }
+
     //endregion public methods
 
     //region private methods
     count(distinct = false) {
-        if (this.#items === null) {
-            throw new EmptyCartException();
-        }
         if (distinct) {
             return this.#items.length;
         }
@@ -52,9 +47,6 @@ module.exports = class Cart {
     }
 
     add(items) {
-        if ((items === null)&&(this.#items === null)) {
-            throw new UpdateCartException();
-        }
         this.#items = items;
     }
 
